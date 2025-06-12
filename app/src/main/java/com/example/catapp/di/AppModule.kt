@@ -1,6 +1,7 @@
 package com.example.catapp.di
 
 import com.example.catapp.data.local.CatRepository
+import com.example.catapp.data.local.CatRepositoryInterface
 import com.example.catapp.data.local.CatsDatabase
 import com.example.catapp.data.remote.CatApiService
 import com.example.catapp.ui.cats.CatViewModel
@@ -34,7 +35,7 @@ val appModule = module {
         get<CatsDatabase>().catDao()
     }
 
-    single {
+    single<CatRepositoryInterface> {
         CatRepository(
             catDao = get(),
             apiService = get()

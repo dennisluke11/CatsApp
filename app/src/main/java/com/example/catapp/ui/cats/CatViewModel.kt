@@ -3,14 +3,14 @@ package com.example.catapp.ui.cats
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.catapp.data.local.CatEntity
-import com.example.catapp.data.local.CatRepository
+import com.example.catapp.data.local.CatRepositoryInterface
 import com.example.catapp.utils.NetworkUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class CatViewModel(
-    private val repository: CatRepository,
+    private val repository: CatRepositoryInterface,
     private val networkUtils: NetworkUtils
 ) : ViewModel() {
 

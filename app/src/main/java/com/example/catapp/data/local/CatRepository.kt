@@ -2,13 +2,12 @@ package com.example.catapp.data.local
 
 import com.example.catapp.data.remote.CatApiService
 
-
 class CatRepository(
     private val catDao: CatDao,
     private val apiService: CatApiService
-) {
+) : CatRepositoryInterface {
 
-    suspend fun refreshCats() {
+    override suspend fun refreshCats() {
         try {
             val response = apiService.getCatImages()
 
@@ -28,5 +27,5 @@ class CatRepository(
         }
     }
 
-    suspend fun getLocalCats(): List<CatEntity> = catDao.getAllCats()
+    override suspend fun getLocalCats(): List<CatEntity> = catDao.getAllCats()
 }
