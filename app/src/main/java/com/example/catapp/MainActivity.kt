@@ -4,44 +4,35 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.catapp.ui.theme.CatAppTheme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.example.catapp.data.local.CatEntity
+import com.example.catapp.ui.cats.CatDetailScreen
+import com.example.catapp.ui.cats.CatListScreen
+import com.example.catapp.ui.cats.CatViewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
-            CatAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            val catViewModel: CatViewModel = getViewModel()
+            var selectedCat by remember { mutableStateOf<CatEntity?>(null) }
+
+            selectedCat?.let { cat ->
+                CatDetailScreen(
+                    cat = cat,
+                    onBack = { selectedCat = null },
+                    catViewModel
+                )
+            } ?: CatListScreen(
+                viewModel = catViewModel,
+                onCatClick = { selectedCat = it }
+            )
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CatAppTheme {
-        Greeting("Android")
     }
 }
