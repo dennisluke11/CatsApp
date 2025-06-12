@@ -20,6 +20,7 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.example.catapp.R
 import com.example.catapp.data.local.CatEntity
+import com.example.catapp.ui.Dimens
 
 @Composable
 fun CatItem(cat: CatEntity, onClick: () -> Unit) {
@@ -29,9 +30,9 @@ fun CatItem(cat: CatEntity, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(Dimens.ElevationCard)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(Dimens.PaddingMedium)) {
             AsyncImage(
                 model = ImageRequest.Builder(context)
                     .data(cat.url)
@@ -42,12 +43,12 @@ fun CatItem(cat: CatEntity, onClick: () -> Unit) {
                 contentDescription = cat.title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp),
+                    .height(Dimens.ImageHeight),
                 placeholder = painterResource(id = R.drawable.placeholder),
                 error = painterResource(id = R.drawable.placeholder),
                 fallback = painterResource(id = R.drawable.placeholder)
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Dimens.SpacerSmall))
             Text(text = cat.title, style = MaterialTheme.typography.titleMedium)
             Text(text = cat.description, style = MaterialTheme.typography.bodyMedium)
         }

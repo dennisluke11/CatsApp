@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
@@ -31,6 +32,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.catapp.R
 import com.example.catapp.data.local.CatEntity
+import com.example.catapp.ui.Dimens
 import com.example.catapp.ui.cats.components.NoNetworkDialog
 
 
@@ -66,7 +68,7 @@ fun CatDetailScreen(cat: CatEntity, onBack: () -> Unit, viewModel: CatViewModel)
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(id = R.string.back)
                         )
                     }
                 }
@@ -87,20 +89,20 @@ fun CatDetailScreen(cat: CatEntity, onBack: () -> Unit, viewModel: CatViewModel)
                 placeholder = painterResource(id = R.drawable.placeholder),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.8f)
+                    .fillMaxHeight(Dimens.ImageHeightFraction)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(Dimens.SpacerMedium))
 
             Text(
                 text = cat.title,
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = Dimens.PaddingMedium)
             )
             Text(
                 text = cat.description,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = Dimens.PaddingMedium)
             )
         }
     }

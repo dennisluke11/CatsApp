@@ -17,9 +17,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.catapp.data.local.CatEntity
 import com.example.catapp.ui.cats.components.NoNetworkDialog
+import com.example.catapp.R
+import com.example.catapp.ui.Dimens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +35,7 @@ fun CatListScreen(viewModel: CatViewModel, onCatClick: (CatEntity) -> Unit) {
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Cat Gallery") })
+            TopAppBar(title = { Text(stringResource(id = R.string.cat_gallery)) })
         }
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
@@ -45,11 +48,10 @@ fun CatListScreen(viewModel: CatViewModel, onCatClick: (CatEntity) -> Unit) {
                 }
             } else {
                 LazyColumn(
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    contentPadding = PaddingValues(Dimens.PaddingMedium),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.ListItemSpacing)
                 ) {
                     items(cats) { cat ->
-                        // Use a simpler item composable here, e.g. CatItem
                         CatItem(cat = cat, onClick = { onCatClick(cat) })
                     }
                 }

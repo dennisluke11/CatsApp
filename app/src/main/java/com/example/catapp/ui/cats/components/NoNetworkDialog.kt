@@ -4,6 +4,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.example.catapp.R
 
 @Composable
 fun NoNetworkDialog(
@@ -15,12 +17,12 @@ fun NoNetworkDialog(
             onDismissRequest = { },
             confirmButton = {
                 TextButton(onClick = onDismiss) {
-                    Text("OK")
+                    Text(stringResource(id = R.string.ok))
                 }
             },
-            title = { Text("No Internet Connection") },
+            title = { Text(stringResource(id = R.string.no_internet_connection)) },
             text = {
-                Text("You're using this app in offline mode. Please enable mobile data or Wi-Fi to experience smooth image loading.")
+                Text(stringResource(id = R.string.offline_mode_message))
             }
         )
     }
