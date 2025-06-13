@@ -8,6 +8,7 @@ import com.example.catapp.utils.NetworkUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import android.util.Log
 
 class CatViewModel(
     private val repository: CatRepositoryInterface,
@@ -22,6 +23,8 @@ class CatViewModel(
 
     private val _showNetworkDialog = MutableStateFlow(false)
     val showNetworkDialog: StateFlow<Boolean> = _showNetworkDialog
+
+    private val TAG = "CatViewModel"
 
     init {
         observeNetwork()
@@ -44,14 +47,21 @@ class CatViewModel(
             _isLoading.value = true
 
             val localCats = repository.getLocalCats()
+            Log.d(TAG, "Fetched ${localCats.size} cats from local DB")
             if (localCats.isNotEmpty()) {
                 _cats.value = localCats
                 _isLoading.value = false
             } else {
+                Log.d(TAG, "No local cats found, checking network...")
                 networkUtils.isConnected.collect { connected ->
                     if (connected) {
+                        Log.d(TAG, "Network available: Fetching from remote API")
                         repository.refreshCats()
+                        val updatedLocalCats = repository.getLocalCats()
+                        Log.d(TAG, "Fetched ${updatedLocalCats.size} cats from remote and saved to DB")
                         _cats.value = repository.getLocalCats()
+                    } else {
+                        Log.d(TAG, "No internet connection. Cannot fetch cats from remote.")
                     }
                 }
                 _isLoading.value = false
